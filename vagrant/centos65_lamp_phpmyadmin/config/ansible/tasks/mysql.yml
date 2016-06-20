@@ -1,0 +1,28 @@
+## Install and set up MySQL 5.6 ##
+- name: install MySQL5.6 repository
+  shell: >
+      yum -y install http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
+      creates=/etc/yum.repos.d/mysql-community.repo
+      
+- name: install MySQL
+  yum: name={{item}}
+  with_items:
+      - mysql-server
+      - MySQL-python
+  register: install_mysql
+- debug: var=install_mysql
+
+- name: start MySQL
+  service: name=mysqld state=started enabled=yes
+
+- name: Create app database
+  mysql_db:
+    name: app_databasev1 
+    state: present
+    encoding: utf8
+
+- name: Create app mysql user
+  mysql_user:
+    name: test 
+    password: test 
+    priv: app_databasev1.*:ALL

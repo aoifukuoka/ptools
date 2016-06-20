@@ -1,0 +1,11 @@
+## Set up CentOS preferences ##
+- name: set timezone
+  shell: cp -p /usr/share/zoneinfo/Japan /etc/localtime
+  register: set_timezone
+- debug: var=set_timezone
+
+- name: set iptable off
+  shell: | 
+      /sbin/iptables -F
+      /sbin/service iptables stop
+      /sbin/chkconfig iptables off

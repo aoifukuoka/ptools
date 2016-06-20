@@ -1,0 +1,13 @@
+- hosts: lemp-centos7
+  sudo: true
+  tasks:
+    - include: tasks/preferences.yml
+    - include: tasks/repositories.yml
+    - include: tasks/git.yml
+    - include: tasks/nginx.yml
+    - include: tasks/php.yml
+    - include: tasks/mysql.yml
+    - include: tasks/phpmyadmin.yml
+    - include: tasks/app.yml
+  # handlers:
+  #   - include: handlers/

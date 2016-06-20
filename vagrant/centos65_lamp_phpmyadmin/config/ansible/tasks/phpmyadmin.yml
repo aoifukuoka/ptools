@@ -1,0 +1,13 @@
+## Install and set up phpMyAdmin ##
+- name: install phpMyAdmin
+  yum: name=phpMyAdmin enablerepo=epel
+  register: install_phpmyadmin
+- debug: var=install_phpmyadmin
+
+- name: change phpMyAdmin access right
+  replace: >
+    dest=/etc/httpd/conf.d/phpMyAdmin.conf
+    regexp=" Deny from All"
+    replace=" #Deny from All"
+  notify:
+    - restart httpd

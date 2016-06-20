@@ -1,0 +1,44 @@
+## Install and set up MySQL 5.6 ##
+
+- name: remove MariaDB repository
+  yum: 
+    name: mariadb-libs
+    state: absent
+    
+- name: remove MariaDB files
+  shell: rm -rf /var/lib/mysql/
+
+- name: install MySQL repository
+  shell: >
+      yum -y install http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm
+      creates=/etc/yum.repos.d/mysql-community.repo
+  register: install_mysql_repo
+- debug: var=install_mysql_repo
+      
+- name: install MySQL
+  yum: name={{item}}
+  with_items:
+      - mysql-server
+      - MySQL-python
+  register: install_mysql
+- debug: var=install_mysql
+
+- name: start MySQL
+  service: name=mysqld state=started enabled=yes
+
+- name: Create app database
+  mysql_db:
+    name: app_databasev1 
+    state: present
+    encoding: utf8
+  register: create_db
+- debug: var=create_db
+    
+
+- name: Create app mysql user
+  mysql_user:
+    name: test 
+    password: test 
+    priv: app_databasev1.*:ALL
+  register: create_db_user
+- debug: var=create_db_user

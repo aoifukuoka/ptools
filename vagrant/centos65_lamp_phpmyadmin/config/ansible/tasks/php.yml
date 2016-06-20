@@ -1,0 +1,15 @@
+## Install and set up PHP 5.3.3##
+- name: install PHP 5.3.3
+  yum: name={{item}}
+  with_items:
+    - php
+    - php-mbstring
+    - php-mysql
+  register: install_php
+- debug: var=install_php
+
+- name: set PHP timezone
+  replace: >
+    dest=/etc/php.ini
+    regexp="^;date\.timezone ="
+    replace="date.timezone = Asia/Tokyo"

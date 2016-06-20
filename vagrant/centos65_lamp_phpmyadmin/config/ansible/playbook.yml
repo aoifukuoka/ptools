@@ -1,0 +1,10 @@
+- hosts: lamp-centos6.5
+  sudo: true
+  tasks:
+    - include: tasks/preferences.yml
+    - include: tasks/httpd.yml
+    - include: tasks/php.yml
+    - include: tasks/mysql.yml
+    - include: tasks/phpmyadmin.yml
+  handlers:
+    - include: handlers/httpd.yml

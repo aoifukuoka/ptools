@@ -1,0 +1,14 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure(2) do |config|
+  config.vm.box = "centos7"
+  config.vm.network "private_network", ip: "192.168.33.88"
+  config.vm.hostname = "lemp-centos7"
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "config/ansible/playbook.yml"
+    ansible.inventory_path = "config/ansible/hosts"
+    ansible.limit = "all"
+    ansible.verbose = "v"
+  end
+end

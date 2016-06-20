@@ -1,0 +1,28 @@
+## Install and set up Nginx ##
+
+- name: install Nginx repository
+  yum: name=http://nginx.org/packages/centos/7/noarch/RPMS/nginx-release-centos-7-0.el7.ngx.noarch.rpm
+  register: nginx_repo
+- debug: var=nginx_repo
+
+- name: install Nginx
+  yum: name=nginx
+  register: install_nginx
+- debug: var=install_nginx
+
+- name: start Nginx
+  service: name=nginx state=started enabled=yes
+
+- name: change firewall settings
+  shell: |
+      firewall-cmd --add-service=http --permanent
+      firewall-cmd --reload
+      
+- name: set up document root
+  shell: |
+      cp -a /vagrant/config/nginx/app.conf /etc/nginx/conf.d/
+
+- name: reload nginx
+  service:
+    name: nginx
+    state: reloaded

@@ -1,0 +1,19 @@
+## Install repositories ##
+
+- name: install epel-release repository
+  yum: name=epel-release
+  register: install_epel
+- debug: var=install_epel
+
+- name: set up
+  replace: >
+    dest=/etc/yum.repos.d/epel.repo
+    regexp="enabled=1"
+    replace="enabled=0"
+    
+- name: install rpm
+  shell: |
+      wget http://rpms.famillecollet.com/enterprise/remi-release-7.rpm
+      rpm -ivh remi-release-7.rpm
+  register: install_rpm
+- debug: var=install_rpm

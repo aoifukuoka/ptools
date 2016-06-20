@@ -1,0 +1,11 @@
+## Install and set up phpMyAdmin ##
+
+- name: install phpMyAdmin
+  yum: name=phpMyAdmin enablerepo=epel
+  register: install_phpmyadmin
+- debug: var=install_phpmyadmin
+  
+- name: reload nginx
+  service:
+    name: nginx
+    state: reloaded

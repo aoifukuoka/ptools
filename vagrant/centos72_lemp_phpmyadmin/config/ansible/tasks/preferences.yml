@@ -1,0 +1,5 @@
+## Set up CentOS preferences ##
+- name: set timezone
+  shell: cp -p /usr/share/zoneinfo/Japan /etc/localtime
+  register: set_timezone
+- debug: var=set_timezone

@@ -1,0 +1,6 @@
+## App settings ##
+
+- name: grant permissions
+  shell: |
+      chmod -R 777 /vagrant/app/tmp/
+      chmod -R +w /vagrant/app/logs/

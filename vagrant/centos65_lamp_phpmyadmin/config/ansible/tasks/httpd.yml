@@ -1,0 +1,16 @@
+## Install and set up Apache2 ##
+- name: install apache2 v2.2.15
+  yum:
+    name: httpd-2.2.15 
+    state: present
+  register: install_apache2
+- debug: var=install_apache2
+
+- name: set up apache2
+  shell: |
+      cp -a /vagrant/config/apache2/httpd.conf /etc/httpd/conf/
+      /sbin/service httpd restart
+      /sbin/chkconfig httpd on
+  
+  register: set_up_apache2
+- debug: var=set_up_apache2
